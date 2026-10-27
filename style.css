@@ -1,0 +1,240 @@
+/* ==========================================================
+   Storia della patata — Prova 7
+   Mobile first: tutto in colonna; da 64em si affianca.
+   Griglia Figma: 12 colonne su 1440, margini 64, gutter 24
+   (colonna ≈ 87,3px) → contenitore 1312px = 82rem.
+   ========================================================== */
+
+/* ---------- 1. Colori e misure (stessi nomi di ruolo degli stili Figma) ---------- */
+:root {
+  --sfondo-pagina: #faf7f2;
+  --testo-principale: #141414;
+  --testo-secondario: #6b655c;
+  --accento: #d6402b;
+  --sfondo-evidenza: #d6402b;
+  --testo-su-evidenza: #faf7f2;
+  --bordo-immagine: #c9b8a8;
+
+  --font-titoli: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-testo: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --margine: 1.5rem;      /* 24px sul telefono (4 colonne) */
+  --gutter: 1.5rem;       /* 24px, sia telefono sia desktop */
+  /* una colonna di 12: la percentuale si calcola sul contenitore dove viene usata */
+  --col: calc((100% - 11 * var(--gutter)) / 12);
+}
+
+@media (min-width: 64em) {
+  :root { --margine: 4rem; }  /* 64px sul desktop */
+}
+
+/* ---------- 2. Scheletro ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--sfondo-pagina);
+  color: var(--testo-principale);
+  font-family: var(--font-testo);
+  font-size: 1.125rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, p, figure { margin: 0; }
+h1, h2 { font-family: var(--font-titoli); font-weight: 400; }
+
+img { display: block; max-width: 100%; height: auto; }
+
+/* contenitore sulle colonne: min() = mai più largo di 82rem, mai a filo schermo */
+.contenitore {
+  width: min(100% - 2 * var(--margine), 82rem);
+  margin-inline: auto;
+}
+
+/* ---------- 3. Elementi comuni ---------- */
+.foto img {
+  width: 100%;
+  object-fit: cover;
+}
+.foto--copertina img { aspect-ratio: 330 / 430; }
+.foto--riga img      { aspect-ratio: 755 / 380; }
+.foto--galleria img  { aspect-ratio: 16 / 9; }
+
+.foto--bordo img {
+  border: 1px solid var(--bordo-immagine);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+}
+
+/* ---------- 4. Apertura ---------- */
+.apertura {
+  padding-block: 2.5rem 3.5rem;
+}
+
+.titolo-pagina {
+  font-size: clamp(3.25rem, 13.9vw, 12.5rem);   /* 200px a 1440 */
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+.titolo-pagina span {
+  display: block;
+  color: var(--accento);
+}
+
+.apertura__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+
+.frase {
+  font-family: var(--font-titoli);
+  font-style: italic;
+  font-size: clamp(1.75rem, 3.05vw, 2.75rem);    /* 44px a 1440 */
+  line-height: 1.18;
+}
+
+.apertura__lato {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.origine {
+  font-size: 1.125rem;
+  color: var(--testo-secondario);
+}
+
+.foto--copertina { width: min(100%, 20.625rem); }   /* 330px */
+
+/* ---------- 5. Righe: data + titolo | testo + immagine ---------- */
+.riga {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-block: 2rem 3rem;
+  border-top: 2px solid var(--testo-principale);
+}
+
+.riga__etichetta {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.data {
+  font-family: var(--font-titoli);
+  font-size: clamp(4rem, 7.65vw, 6.875rem);       /* 110px a 1440 */
+  line-height: 0.91;
+  letter-spacing: -0.02em;
+  color: var(--accento);
+}
+
+.titolo-sezione {
+  font-size: clamp(2rem, 3.6vw, 3.25rem);          /* 52px a 1440 */
+  line-height: 1.04;
+}
+
+.riga__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.testo {
+  font-size: clamp(1.125rem, 1.6vw, 1.4375rem);    /* 23px a 1440 */
+  line-height: 1.52;
+}
+
+/* ---------- 6. Conclusione ---------- */
+.evidenza {
+  background: var(--sfondo-evidenza);
+  color: var(--testo-su-evidenza);
+  padding-block: 3.5rem 4rem;
+}
+
+.evidenza__contenuto {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.etichetta-evidenza {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.titolo-evidenza {
+  font-size: clamp(3.75rem, 13.2vw, 11.875rem);    /* 190px a 1440 */
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.evidenza__dati {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.dato-principale {
+  font-family: var(--font-titoli);
+  font-size: clamp(1.75rem, 3.2vw, 2.875rem);     /* 46px a 1440 */
+  line-height: 1.17;
+}
+
+.dato-secondario {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+/* Grid: due immagini uguali in riga regolare */
+.galleria {
+  display: grid;
+  gap: 2rem;
+}
+
+/* ---------- 7. Da 64em: si affianca (Flexbox + Grid) ---------- */
+@media (min-width: 64em) {
+
+  .apertura { padding-block: 4.5rem 5rem; }
+
+  .apertura__corpo {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 3rem;
+  }
+  /* frase: colonne 1-4 · blocco a destra: colonne 6-12 */
+  .frase          { flex: 0 0 calc(4 * var(--col) + 3 * var(--gutter)); }
+  .apertura__lato { flex: 0 0 calc(7 * var(--col) + 6 * var(--gutter)); gap: 2rem; }
+  .origine        { font-size: 1.25rem; }
+  .foto--copertina { margin-left: auto; }
+
+  .riga {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-block: 3rem 4.5rem;
+  }
+  /* etichetta: colonne 1-4 · corpo: colonne 6-12 */
+  .riga__etichetta { flex: 0 0 calc(4 * var(--col) + 3 * var(--gutter)); }
+  .riga__corpo     { flex: 0 0 calc(7 * var(--col) + 6 * var(--gutter)); }
+
+  .evidenza { padding-block: 4.25rem 5.25rem; }
+  .evidenza__contenuto { gap: 3rem; }
+
+  .evidenza__dati {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  /* dato principale: colonne 1-7 · dato secondario: colonne 9-12 */
+  .dato-principale  { flex: 0 0 calc(7 * var(--col) + 6 * var(--gutter)); }
+  .dato-secondario  { flex: 0 0 calc(4 * var(--col) + 3 * var(--gutter)); font-size: 1.25rem; line-height: 1.5; }
+
+  .galleria { grid-template-columns: repeat(2, 1fr); margin-top: 1rem; }
+}
